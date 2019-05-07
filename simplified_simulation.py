@@ -24,16 +24,13 @@ def Simulate(a,k_20,k_50):
     Sim={
            'RRP':np.zeros(251), #RRP_init
            'RPP':np.zeros(251),
-           'PEP':np.zeros(251),
-           'SP':np.zeros(251),
            'time':np.zeros(251),
            'EPSC':np.zeros(251)
            }
     
     Sim['RRP'][0]=RP*inv_k_20[0]/sum(inv_k_20)
     Sim['RPP'][0]=RP*inv_k_20[1]/sum(inv_k_20)
-    Sim['PEP'][0]=RP*inv_k_20[2]/sum(inv_k_20)
-    Sim['SP'][0] =RP*inv_k_20[3]/sum(inv_k_20)
+
     Sim['EPSC'][0]= Sim['RRP'][0]
     
     # Simulation
@@ -42,9 +39,7 @@ def Simulate(a,k_20,k_50):
     for i in range(250):
         k[1]=Calc_K(k_20[1],k_50[1],Sim['time'][i],a)
         Sim['RRP'][i+1]=Sim['RRP'][i]+dt*(-k[0]*Sim['RRP'][i]+k[1]*Sim['RPP'][i])
-        Sim['RPP'][i+1]=Sim['RPP'][i]+dt*(-k[1]*Sim['RPP'][i]+k[2]*Sim['PEP'][i])
-        Sim['PEP'][i+1]=Sim['PEP'][i]+dt*(-k[2]*Sim['PEP'][i]+k[3]*Sim['SP'][i] )
-        Sim['SP'][i+1] =Sim['SP'][i]+ dt*(-k[3]*Sim['SP'][i]+ k[0]*Sim['RRP'][i])
+        Sim['RPP'][i+1]=Sim['RPP'][i]
         Sim['time'][i+1]=Sim['time'][i]+dt
         Sim['EPSC'][i+1]= Sim['RRP'][i+1]
     Sim['EPSC'] = Sim['EPSC'][1:]/Sim['RRP'][0]
@@ -62,4 +57,3 @@ def test():
     
     plt.plot(Sim['EPSC'])
     plt.show()
-

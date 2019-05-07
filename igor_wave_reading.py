@@ -3,9 +3,8 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-exp_data=pd.read_csv("dupEPSC.txt")
+def read(filename):
+    exp_data=pd.read_csv(filename)
+    data_array=np.array(exp_data)
+    return data_array
 
-plt.plot(exp_data['dupEPSC'])
-plt.show()
-
-print(exp_data['dupEPSC'])
