@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import sqrt,exp
 
-def cost_function(X,z):
+def cost_function(X):
     #should input variable vector X, output cost y
     
     return X**2
@@ -67,7 +67,7 @@ def annealing_simulation(Xi,Ti,Tm,a):
         T=T*a
     return bestX,besty,ylist
 
-test_flag=1
+test_flag=0
 if(test_flag==0):
     #my own annealing function
     t=time.process_time()
@@ -82,13 +82,15 @@ if(test_flag==0):
     print(bestX)
     print(besty)
 
+
+
 #scipy annealing function
 from scipy import optimize
 
 t=time.process_time()
 
-minimizer_kwargs={'args':1}
-res = optimize.basinhopping(cost_function,1,minimizer_kwargs=minimizer_kwargs)
+#minimizer_kwargs={'args':1}
+res = optimize.basinhopping(cost_function,1)
 
 print("time:")
 print(time.process_time()-t)
